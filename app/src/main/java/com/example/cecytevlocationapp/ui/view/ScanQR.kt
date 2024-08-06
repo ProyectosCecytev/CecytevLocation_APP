@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.cecytevlocationapp.R
 import com.example.cecytevlocationapp.data.model.AttendanceModel
 import com.example.cecytevlocationapp.data.model.AttendanceProvider
+import com.example.cecytevlocationapp.data.model.ContextProvider
 import com.example.cecytevlocationapp.data.model.LoginProvider
 import com.example.cecytevlocationapp.databinding.ActivityScanQrBinding
 import com.example.cecytevlocationapp.ui.viewModel.AttendanceViewModel
@@ -25,6 +26,7 @@ class ScanQR : AppCompatActivity() {
         binding = ActivityScanQrBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setListener()
+        ContextProvider.context = this
         attendanceViewModel.attendanceViewModel.observe(this){
             checkCode()
         }
@@ -46,7 +48,7 @@ class ScanQR : AppCompatActivity() {
             initScanner()
         }
         binding.btnExitScanQR.setOnClickListener{
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, MenuTeacher::class.java)
             startActivity(intent)
             finish()
         }

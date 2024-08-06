@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import com.example.cecytevlocationapp.data.model.ContextProvider
 import com.example.cecytevlocationapp.data.model.LocationProvider
 import com.example.cecytevlocationapp.data.model.TutorCredencialsLocation
 import com.example.cecytevlocationapp.databinding.ActivityShowMapBinding
@@ -33,6 +34,7 @@ class ShowMap : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityShowMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ContextProvider.context = this
         var idStudent = intent.getStringExtra("idStudent") ?: ""// extraer valor mandado desde la actividad que lo instanció
         locationStudentViewModel.idStudent = idStudent//pasando valor a variable en el viewModel
         locationStudentViewModel.getNewStudentLocation()//activando funcion en el viewModel
@@ -49,6 +51,7 @@ class ShowMap : AppCompatActivity() {
                 loadLeafletMap()
                 setListeners()
                 binding.loadinLayerShowMap.visibility = View.GONE
+                alertMessage.showAlertDialog("SUCCESS", "mostrando informacion: " + LocationProvider.locationStudent.locations.count(), this)
             }
             Codes.CODE_FAIL -> {
                 alertMessage.showAlertDialog("Error", "ocurrio un error", this)
@@ -57,6 +60,10 @@ class ShowMap : AppCompatActivity() {
             Codes.CODE_NOT_FOUND ->{
                 alertMessage.showAlertDialog("Estudiante no encontrado","No se encontro informacion del estudiante deseado",this)
                 returnMenuParent()
+            }
+            Codes.NOT_AUTHORIZATION_TOKEN ->{
+                alertMessage.showAlertDialog("Error", "Acceso Denegado", this)
+                returnLogin()
             }
         }
     }

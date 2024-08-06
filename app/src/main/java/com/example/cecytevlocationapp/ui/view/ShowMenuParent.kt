@@ -37,7 +37,12 @@ class ShowMenuParent : AppCompatActivity() {
         childrenListViewModel.getChildrenListViewModel.observe(this){//observer del viewModel
             validateCode()
         }
-
+        //regresar a pantalla de login
+        binding.btnExitShowMenuParent.setOnClickListener{
+            var intent   = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun validateCode() {//valida codigos de respuesta del servidor

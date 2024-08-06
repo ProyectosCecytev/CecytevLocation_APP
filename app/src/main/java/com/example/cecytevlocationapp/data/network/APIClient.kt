@@ -20,16 +20,27 @@ import retrofit2.http.Path
 
 interface APIClient {
     @POST("api/v1/login")
-    suspend fun login(@Body credentials : LoginModel): Response<UserModel>
+    suspend fun login(
+        @Body credentials : LoginModel
+    ): Response<UserModel>
 
     @POST("api/v1/registerattendance")
-    suspend fun registerAttendance(@Body attendance : AttendanceModel): Response<AttendanceStudentResponse>
+    suspend fun registerAttendance(
+        @Header ("Authorization") authToken : String,
+        @Body attendance : AttendanceModel
+    ): Response<AttendanceStudentResponse>
 
     @POST("api/v1/location/registerLocation")
-    suspend fun registerLocationStudent(@Body locationStudent : LocationStudentModel): Response<Void>
+    suspend fun registerLocationStudent(
+        @Header ("Authorization") authToken : String,
+        @Body locationStudent : LocationStudentModel)
+    : Response<Void>
 
     @GET("api/v1/location/getLocationStudent/{matricula}")
-    suspend fun getLocationStudent(@Path("matricula") matricula: String): Response<LocationStudentResponse>
+    suspend fun getLocationStudent(
+        @Header ("Authorization") authToken : String,
+        @Path("matricula") matricula: String
+    ): Response<LocationStudentResponse>
 
     @POST("api/v1/location/getChildrenList")
     suspend fun getChildrenList(

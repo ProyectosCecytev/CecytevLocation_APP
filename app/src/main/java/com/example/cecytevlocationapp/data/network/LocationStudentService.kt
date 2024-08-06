@@ -28,9 +28,10 @@ class LocationStudentService {
     suspend fun registerStudentLocation(studentLocation: LocationStudentModel): Int {
         return withContext(Dispatchers.IO) {
             var code = 0
+            var authToken = sharedPreferences.getString("auth-token","") ?: ""
             try {
                 val response =
-                    retrofit.create(APIClient::class.java).registerLocationStudent(studentLocation)
+                    retrofit.create(APIClient::class.java).registerLocationStudent("Bearer $authToken",studentLocation)
                 code = response.code()
                 code
             } catch (e: Exception) {
@@ -44,9 +45,10 @@ class LocationStudentService {
         return withContext(Dispatchers.IO) {
             var code = 0
             var locationStudent: LocationStudentResponse = LocationStudentResponse()
+            var authToken = sharedPreferences.getString("auth-token","") ?: ""
             try {
                 val response =
-                    retrofit.create(APIClient::class.java).getLocationStudent(matricula)
+                    retrofit.create(APIClient::class.java).getLocationStudent("Bearer $authToken",matricula)
                 code = response.code()
                 locationStudent = response.body() ?: LocationStudentResponse()
                 Pair(code, locationStudent)

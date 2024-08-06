@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cecytevlocationapp.data.model.ContextProvider
 import com.example.cecytevlocationapp.data.model.LoginProvider
 import com.example.cecytevlocationapp.databinding.ActivityMenuStudentBinding
 import com.example.cecytevlocationapp.utility.AlertMessage
@@ -18,7 +19,7 @@ class MenuStudent : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setListener()
-
+        ContextProvider.context = this
     }
 
     private fun setListener() {
